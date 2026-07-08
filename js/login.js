@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var passwordOk = document.getElementById("loginPasswordOk");
 
   var togglePassword = document.getElementById("togglePassword");
+  var recordarme = document.getElementById("recordarme");
 
   // ---------- Usuarios simulados (no hay backend real) ----------
   //USUARIOS SIMULADOS CON LOCALSTORAGE
@@ -40,11 +41,30 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
-  // Busca un usuario cuyo correo y contraseña coincidan.
-  // Devuelve el usuario encontrado, o null si no hay coincidencia.
+  // Lee los usuarios que se hayan capturado desde el panel (index.html)
+  // y quedaron guardados en localStorage.
+  function obtenerUsuariosCapturados() {
+    var datosGuardados = localStorage.getItem("utileriaUsuariosCapturados");
+
+    if (!datosGuardados) {
+      return [];
+    }
+
+    try {
+      var usuarios = JSON.parse(datosGuardados);
+      return Array.isArray(usuarios) ? usuarios : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // Busca un usuario cuyo correo y contraseña coincidan, ya sea entre
+  // los usuarios simulados o entre los capturados desde el panel.
   function buscarUsuario(correoIngresado, passwordIngresada) {
-    for (var i = 0; i < usuariosSimulados.length; i++) {
-      var usuario = usuariosSimulados[i];
+    var todosLosUsuarios = usuariosSimulados.concat(obtenerUsuariosCapturados());
+
+    for (var i = 0; i < todosLosUsuarios.length; i++) {
+      var usuario = todosLosUsuarios[i];
       if (
         usuario.correo.toLowerCase() === correoIngresado.toLowerCase() &&
         usuario.password === passwordIngresada
@@ -207,7 +227,14 @@ document.addEventListener("DOMContentLoaded", function () {
       rol: usuarioEncontrado.rol,
       fechaAcceso: new Date().toISOString(),
     };
-    localStorage.setItem("utileriaUsuarioActivo", JSON.stringify(sesion));
+    localStorage.removeItem("utileriaUsuarioActivo");
+    sessionStorage.removeItem("utileriaUsuarioActivo");
+
+    if (recordarme.checked) {
+      localStorage.setItem("utileriaUsuarioActivo", JSON.stringify(sesion));
+    } else {
+      sessionStorage.setItem("utileriaUsuarioActivo", JSON.stringify(sesion));
+    }
 
     mostrarFeedback("Acceso correcto. Redirigiendo…", "is-success");
     btnLogin.disabled = true;
