@@ -1,31 +1,197 @@
 <!DOCTYPE html>
 <html lang="es">
-    
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel Principal</title>
     <link rel="stylesheet" href="css/index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <nav id="navbar" aria-label="Menu de navegacion">
+        <button id="toggle-sidebar" class="icon-btn" type="button" aria-label="Abrir o cerrar menu lateral">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <h1 class="topbar-title">Panel Principal</h1>
+        <div class="topbar-actions">
+            <button class="icon-btn" type="button" aria-label="Buscar">
+                <i class="bi bi-search"></i>
+            </button>
+            <div class="user-menu">
+                <button id="user-menu-toggle" class="user-chip" type="button" aria-haspopup="true"
+                    aria-expanded="false">
+                    <span class="user-avatar" id="user-avatar">?</span>
+                    <span class="user-name" id="user-name">Invitado</span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="user-dropdown" id="user-dropdown">
+                    <button id="logout-btn" class="dropdown-item" type="button">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Salir del sistema</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <aside id="sidebar">
         <nav>
+            <ul id="sidebar-menu" class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link active" data-seccion="inicio">
+                        <i class="bi bi-house"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" id="toggle-usuarios">
+                        <i class="bi bi-people"></i>
+                        <span>Usuarios</span>
+                        <i class="bi bi-chevron-down chevron" id="icono-usuarios"></i>
+                    </a>
+                    <ul class="sidebar-submenu" id="submenu-usuarios">
+                        <li>
+                            <a href="#" class="sidebar-sublink" data-seccion="usuarios-captura">
+                                <span>Captura</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-seccion="alumnos">
+                        <i class="bi bi-mortarboard"></i>
+                        <span>Alumnos</span>
+                    </a>
+                </li>
+            </ul>
         </nav>
     </aside>
 
     <main id="main-content">
+
+        <section id="seccion-inicio" class="content-section">
+            <p class="panel-titulo">Bienvenido de nuevo</p>
+            <p class="panel-subtitulo">Este es el resumen de tu sesión activa</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="neu-flat stat-mini">
+                        <span class="stat-label"><i class="bi bi-person-check"></i> Sesión iniciada como</span>
+                        <span class="stat-valor" id="inicio-usuario-actual">Invitado</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="neu-flat stat-mini">
+                        <span class="stat-label"><i class="bi bi-people"></i> Usuarios capturados</span>
+                        <span class="stat-valor" id="inicio-total-usuarios">0</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="neu-flat stat-mini">
+                        <span class="stat-label"><i class="bi bi-mortarboard"></i> Alumnos registrados</span>
+                        <span class="stat-valor" id="inicio-total-alumnos">0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="seccion-usuarios-captura" class="content-section d-none">
+            <p class="panel-titulo">Captura de usuarios</p>
+            <p class="panel-subtitulo">Registra los datos de acceso de un nuevo usuario del sistema</p>
+            <div class="neu-flat card-neu" style="max-width: 460px;">
+                <form id="form-captura" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label" for="captura-nombre">Nombre de usuario</label>
+                        <input type="text" class="neu-inset neu-input" id="captura-nombre" placeholder="Ej. Juan Pérez">
+                        <div class="form-feedback" id="feedback-captura-nombre"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="captura-correo">Correo electrónico</label>
+                        <input type="text" class="neu-inset neu-input" id="captura-correo"
+                            placeholder="usuario@correo.com">
+                        <div class="form-feedback" id="feedback-captura-correo"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="captura-password">Contraseña</label>
+                        <div class="input-group-neu neu-inset">
+                            <input type="password" class="neu-input" id="captura-password"
+                                placeholder="Mínimo 8 caracteres">
+                            <button type="button" class="btn-neu-icon" id="btn-generar-password"
+                                title="Generar contraseña segura">
+                                <i class="bi bi-magic"></i>
+                            </button>
+                        </div>
+                        <div class="form-feedback" id="feedback-captura-password"></div>
+                    </div>
+                    <button type="submit" class="btn-neu-primary">Guardar usuario</button>
+                    <div class="alert-neu d-none" id="alerta-captura"></div>
+                </form>
+            </div>
+        </section>
+
+        <section id="seccion-alumnos" class="content-section d-none">
+            <p class="panel-titulo">Registro de alumnos</p>
+            <p class="panel-subtitulo">Captura los datos del alumno y verifica su mayoría de edad</p>
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="neu-flat card-neu">
+                        <form id="form-alumno" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="alumno-nombre">Nombre completo</label>
+                                <input type="text" class="neu-inset neu-input" id="alumno-nombre"
+                                    placeholder="Ej. María López">
+                                <div class="form-feedback" id="feedback-alumno-nombre"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="alumno-control">Número de control</label>
+                                <input type="text" class="neu-inset neu-input" id="alumno-control" maxlength="6"
+                                    placeholder="6 dígitos">
+                                <div class="form-feedback" id="feedback-alumno-control"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="alumno-nacimiento">Fecha de nacimiento</label>
+                                <input type="date" class="neu-inset neu-input" id="alumno-nacimiento">
+                                <div class="form-feedback" id="feedback-alumno-nacimiento"></div>
+                            </div>
+                            <button type="submit" class="btn-neu-primary">Verificar alumno</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="neu-flat card-neu">
+                        <p class="panel-titulo" style="font-size: 1.05rem;">Alumnos capturados</p>
+                        <ul class="lista-alumnos" id="lista-alumnos"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <div class="modal fade" id="modalEdad" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content neu-flat">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">Resultado de edad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="modal-edad-body"></div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/utileria.js" defer></script>
     <script src="js/index.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
+        defer></script>
 </body>
+
 </html>
