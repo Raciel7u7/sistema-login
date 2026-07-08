@@ -1,16 +1,40 @@
+const CLAVE_SESION = 'utileriaUsuarioActivo';
+const CLAVE_USUARIOS_CAPTURADOS = 'utileriaUsuariosCapturados';
+
 let totalUsuariosCapturados = 0;
 let totalAlumnosCapturados = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
+    const sesionActiva = obtenerSesionActiva();
+
+    if (!sesionActiva) {
+        window.location.href = 'login.html';
+        return;
+    }
+
     inicializarSidebar();
     inicializarSubmenuUsuarios();
     inicializarNavegacionSecciones();
-    inicializarUsuarioSesion();
+    inicializarUsuarioSesion(sesionActiva);
     inicializarMenuUsuario();
     inicializarLogout();
     inicializarFormularioCaptura();
     inicializarFormularioAlumno();
 });
+
+function obtenerSesionActiva() {
+    const datosGuardados = localStorage.getItem(CLAVE_SESION) || sessionStorage.getItem(CLAVE_SESION);
+
+    if (!datosGuardados) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(datosGuardados);
+    } catch (error) {
+        return null;
+    }
+}
 
 function inicializarSidebar() {
     const boton = document.getElementById('toggle-sidebar');
@@ -63,9 +87,8 @@ function marcarEnlaceActivo(enlaceSeleccionado) {
     enlaceSeleccionado.classList.add('active');
 }
 
-function inicializarUsuarioSesion() {
-    const nombreGuardado = localStorage.getItem('usuarioNombre') || sessionStorage.getItem('usuarioNombre') || 'Invitado';
-    const nombreUsuario = limpiarEspacios(nombreGuardado);
+function inicializarUsuarioSesion(sesionActiva) {
+    const nombreUsuario = limpiarEspacios(sesionActiva.nombre || sesionActiva.correo || 'Invitado');
 
     document.getElementById('user-name').textContent = nombreUsuario;
     document.getElementById('user-avatar').textContent = obtenerInicial(nombreUsuario);
@@ -93,8 +116,8 @@ function inicializarMenuUsuario() {
 
 function inicializarLogout() {
     document.getElementById('logout-btn').addEventListener('click', () => {
-        localStorage.removeItem('usuarioNombre');
-        sessionStorage.removeItem('usuarioNombre');
+        localStorage.removeItem(CLAVE_SESION);
+        sessionStorage.removeItem(CLAVE_SESION);
         window.location.href = 'login.html';
     });
 }
@@ -117,6 +140,37 @@ function limpiarFeedbackCampo(elementoId) {
     const elemento = document.getElementById(elementoId);
     elemento.textContent = '';
     elemento.classList.remove('feedback-error', 'feedback-ok');
+}
+
+function guardarUsuarioCapturado(nombre, correo, password) {
+    const usuarios = obtenerUsuariosCapturados();
+    const correoNormalizado = correo.toLowerCase();
+
+    const usuariosSinDuplicado = usuarios.filter((usuario) => usuario.correo !== correoNormalizado);
+
+    usuariosSinDuplicado.push({
+        nombre,
+        correo: correoNormalizado,
+        password,
+        rol: 'Usuario',
+    });
+
+    localStorage.setItem(CLAVE_USUARIOS_CAPTURADOS, JSON.stringify(usuariosSinDuplicado));
+}
+
+function obtenerUsuariosCapturados() {
+    const datosGuardados = localStorage.getItem(CLAVE_USUARIOS_CAPTURADOS);
+
+    if (!datosGuardados) {
+        return [];
+    }
+
+    try {
+        const usuarios = JSON.parse(datosGuardados);
+        return Array.isArray(usuarios) ? usuarios : [];
+    } catch (error) {
+        return [];
+    }
 }
 
 function inicializarFormularioCaptura() {
@@ -162,6 +216,7 @@ function inicializarFormularioCaptura() {
         const formularioValido = nombreValido && correoValido && passwordValida;
 
         if (formularioValido) {
+            guardarUsuarioCapturado(nombre, correo, password);
             alerta.textContent = `Usuario ${nombre} registrado correctamente.`;
             alerta.classList.remove('d-none', 'alert-neu-error');
             alerta.classList.add('alert-neu-ok');
