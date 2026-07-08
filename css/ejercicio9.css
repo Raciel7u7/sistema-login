@@ -1,0 +1,599 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Header */
+.header {
+  background-color: #694a98;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.header__title {
+  margin: 0;
+}
+
+.header__subtitle {
+  margin: 5px 0 0 0;
+}
+
+/* Titulo del formulario 
+*/
+.form1__titulo {
+  text-align: center;
+  margin: 25px 0 10px 0;
+}
+
+/* Tarjeta 
+*/
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Formulario 
+*/
+form {
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.form-input.is-valid {
+  border-color: green;
+}
+
+.form-input.is-invalid {
+  border-color: red;
+}
+
+.form-error {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+  display: none;
+}
+
+.form-ok {
+  color: green;
+  font-size: 13px;
+  margin-top: 4px;
+  display: none;
+}
+
+/* Grupo contraseña 
++ boton generar */
+.password-group {
+  display: flex;
+  gap: 8px;
+}
+
+.password-group .form-input {
+  flex: 1;
+}
+
+.btn-generate {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Botones
+ */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn--primary {
+  background-color: #2d6cdf;
+  color: #fff;
+}
+
+.btn--secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn--block {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.modal.is-open {
+  display: block;
+}
+
+.modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__content {
+  position: relative;
+  background-color: #fff;
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 25px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal__close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.modal__icon {
+  font-size: 40px;
+}
+
+.modal__title {
+  margin: 10px 0;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.footer__link {
+  color: #2d6cdf;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  form,
+  .card {
+    margin: 15px;
+    padding: 15px;
+  }
+
+  .password-group {
+    flex-direction: column;
+  }
+
+  .modal__content {
+    margin: 60px 15px;
+  }
+}
+/* ============================================================
+   login.css — Sistema Utilería
+   Paleta:
+     --navy      #16233D  (panel de marca)
+     --navy-deep #0E1830  (fondo)
+     --cream     #F8F6F1  (panel de formulario)
+     --amber     #E3A64B  (acento / foco)
+     --ink       #1C2333  (texto principal)
+     --muted     #74809A  (texto secundario)
+     --error     #D6455D  (error)
+     --success   #2FA36B  (éxito)
+   Tipografía: Poppins (marca/títulos) + Inter (formulario/UI)
+   ============================================================ */
+
+:root {
+    --navy: #16233d;
+    --navy-deep: #0e1830;
+    --cream: #f8f6f1;
+    --amber: #e3a64b;
+    --ink: #1c2333;
+    --muted: #74809a;
+    --error: #d6455d;
+    --success: #2fa36b;
+    --radius: 14px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Inter", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+        radial-gradient(circle at 15% 20%, rgba(227, 166, 75, 0.10), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(227, 166, 75, 0.08), transparent 45%),
+        var(--navy-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.access {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.access__card {
+    width: 100%;
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    background: var(--cream);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Panel de marca ---------- */
+.access__brand {
+    background:
+        linear-gradient(165deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #eef1f7;
+    padding: 44px 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    position: relative;
+}
+
+.access__brand-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(227, 166, 75, 0.14);
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+}
+
+.access__brand-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.access__brand-eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+}
+
+.access__brand-title {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.access__brand-text {
+    margin: 0;
+    color: #b9c2d6;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    max-width: 30ch;
+}
+
+.access__brand-list {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.access__brand-list li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.85rem;
+    color: #cdd4e3;
+}
+
+.access__brand-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+}
+
+/* ---------- Panel de formulario ---------- */
+.access__form-panel {
+    padding: 44px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.access__header {
+    margin-bottom: 24px;
+}
+
+.access__title {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: var(--ink);
+}
+
+.access__subtitle {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+}
+
+.form-input {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #dcdfe6;
+    background: #fff;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    width: 100%;
+}
+
+.form-input::placeholder {
+    color: #a7adba;
+}
+
+/* Foco visible en todos los campos */
+.form-input:focus,
+.checkbox input:focus-visible,
+.access__submit:focus-visible,
+.input-wrap__toggle:focus-visible {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 4px rgba(227, 166, 75, 0.22);
+}
+
+.form-input.is-invalid {
+    border-color: var(--error);
+}
+
+.form-input.is-invalid:focus {
+    box-shadow: 0 0 0 4px rgba(214, 69, 93, 0.16);
+}
+
+.form-input.is-valid {
+    border-color: var(--success);
+}
+
+.form-input.is-valid:focus {
+    box-shadow: 0 0 0 4px rgba(47, 163, 107, 0.16);
+}
+
+.form-error {
+    display: none;
+    color: var(--error);
+    font-size: 0.8rem;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.form-ok {
+    display: none;
+    color: var(--success);
+    font-size: 0.8rem;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.input-wrap {
+    position: relative;
+    display: flex;
+}
+
+.input-wrap .form-input {
+    padding-right: 42px;
+}
+
+.input-wrap__toggle {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--muted);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.input-wrap__toggle:hover {
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.input-wrap__toggle svg {
+    width: 19px;
+    height: 19px;
+}
+
+.access__remember {
+    margin-bottom: 18px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.checkbox input {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--amber);
+}
+
+.access__feedback {
+    min-height: 0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.access__feedback.is-error {
+    color: var(--error);
+    min-height: 20px;
+    margin-bottom: 12px;
+}
+
+.access__feedback.is-success {
+    color: var(--success);
+    min-height: 20px;
+    margin-bottom: 12px;
+}
+
+/* ---------- Botón (Bootstrap + overrides de marca) ---------- */
+.access__submit.btn.btn-primary {
+    background-color: var(--navy);
+    border-color: var(--navy);
+    border-radius: 10px;
+    padding: 12px 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.access__submit.btn.btn-primary:hover {
+    background-color: var(--navy-deep);
+    border-color: var(--navy-deep);
+}
+
+.access__submit.btn.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.access__submit.btn.btn-primary:disabled {
+    opacity: 0.7;
+}
+
+.access__footer-link {
+    text-align: center;
+    margin: 22px 0 0;
+    font-size: 0.85rem;
+}
+
+.footer__link {
+    color: var(--navy);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.footer__link:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 760px) {
+    .access__card {
+        grid-template-columns: 1fr;
+    }
+
+    .access__brand {
+        padding: 32px 28px;
+    }
+
+    .access__brand-title {
+        font-size: 1.7rem;
+    }
+
+    .access__form-panel {
+        padding: 34px 26px;
+    }
+}
