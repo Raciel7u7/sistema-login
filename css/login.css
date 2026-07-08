@@ -14,11 +14,12 @@ body {
   max-width: 700px;
   margin: 0 auto;
   padding: 0 15px;
+  
 }
 
 /* Header */
 .header {
-  background-color: #694a98;
+  background-color: #e6f9ff;
   color: #fff;
   padding: 20px 0;
   text-align: center;
@@ -204,7 +205,7 @@ form {
 }
 
 .footer__link {
-  color: #2d6cdf;
+  color: #2f78ff;
   text-decoration: none;
 }
 
